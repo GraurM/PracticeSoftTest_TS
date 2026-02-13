@@ -1,0 +1,30 @@
+{
+  "name": "practice-soft-test-ts",
+  "version": "1.0.0",
+  "description": "Playwright testing project using TypeScript",
+  "scripts": {
+    "test": "cucumber-js --config ./cucumber.js",
+    "test:bdd": "cucumber-js --config ./cucumber.js",
+    "test:pw": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:debug": "playwright test --debug",
+    "codegen": "playwright codegen",
+    "build": "tsc",
+    "lint": "eslint .",
+    "format": "prettier --write ."
+  },
+  "keywords": [
+    "playwright",
+    "testing",
+    "typescript"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@cucumber/cucumber": "^10.0.0",
+    "@playwright/test": "^1.40.0",
+    "@types/node": "^20.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.0.0"
+  }
+}
