@@ -1,6 +1,6 @@
 import { Page } from '@playwright/test';
 import { Locator } from '@playwright/test';
-import { Header } from '../elements/header';
+import { Header } from '../elements/header_element';
 
 export abstract class BasePage {
   protected readonly page: Page;
@@ -21,7 +21,11 @@ export abstract class BasePage {
       return;
     }
 
-    const targetUrl = new URL(path, this.baseUrl).toString();
+    const targetUrl = new URL(this.baseUrl + path).toString();
     await this.page.goto(targetUrl);
+  }
+
+  async isPageLoaded(): Promise<boolean> {
+    return this.header.headerBadge.isVisible();
   }
 }

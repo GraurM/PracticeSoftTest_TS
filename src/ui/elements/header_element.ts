@@ -19,7 +19,7 @@ export class Header {
     this.root = root;
 
     // Navigation links - using getByRole with flexible text matching
-    this.headerBadge = this.root.locator('navbar-brand');
+    this.headerBadge = this.root.locator('[class*="navbar-brand"], .navbar-brand, .brand').first();
     this.homeLink = this.root.getByRole('menuitem', { name: 'Home' });
     this.categoriesLink = this.root.getByRole('menuitem', { name: 'Categories' });
     this.contactLink = this.root.getByRole('menuitem', { name: 'Contact' });

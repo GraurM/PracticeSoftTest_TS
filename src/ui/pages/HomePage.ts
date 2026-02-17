@@ -1,9 +1,9 @@
 import { Locator, Page } from '@playwright/test';
 import { BasePage } from './BasePage';
-import { SearchElement } from '../elements/search-element';
-import { ProductCard } from '../elements/product-card-element';
-import { ProductsGrid } from '../elements/products-grid-element';
-import { CategoryFilters } from '../elements/category-filters-element';
+import { SearchElement } from '../elements/search_element';
+import { ProductCard } from '../elements/productCard_element';
+import { ProductsGrid } from '../elements/productsGrid_element';
+import { CategoryFilters } from '../elements/categoryFilters_element';
 
 /**
  * HomePage represents the main product listing page of the Toolshop.

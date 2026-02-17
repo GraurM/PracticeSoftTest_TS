@@ -1,5 +1,5 @@
 import { Locator, Page } from '@playwright/test';
-import { ProductCard } from './product-card-element';
+import { ProductCard } from './productCard_element';
 
 /**
  * ProductsGrid element represents the main area containing product cards.
