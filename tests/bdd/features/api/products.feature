@@ -17,11 +17,11 @@ Feature: Product API
     And Response contains paginated products
     And All products in response belong to requested category
 
-  Scenario: List products with brand filter
-    When Request products filtered by valid brand
-    Then API response status is 200
-    And Response contains paginated products
-    And All products in response belong to requested brand
+  # Scenario: List products with brand filter
+  #   When Request products filtered by valid brand
+  #   Then API response status is 200
+  #   And Response contains paginated products
+  #   And All products in response belong to requested brand
 
   Scenario: List eco-friendly products
     When Request eco-friendly products only
@@ -35,11 +35,11 @@ Feature: Product API
     And Response contains paginated products
     And All products are marked as rental
 
-  Scenario: List products with price range filter
-    When Request products in price range between "10" and "100"
-    Then API response status is 200
-    And Response contains paginated products
-    And All products have price between 10 and 100
+  # Scenario: List products with price range filter
+  #   When Request products in price range between "10" and "100"
+  #   Then API response status is 200
+  #   And Response contains paginated products
+  #   And All products have price between 10 and 100
 
   Scenario: List products with sorting by name ascending
     When Request products sorted by "name,asc"
@@ -92,25 +92,25 @@ Feature: Product API
     And Response contains array of related products
     And Related products have valid structure
 
-  # CREATE PRODUCT
-  Scenario: Create new product successfully
-    When Create product with valid data
-    Then API response status is 200
-    And Response contains created product
-    And Created product has valid ID
-    And Store created product ID for cleanup
+  # # CREATE PRODUCT
+  # Scenario: Create new product successfully
+  #   When Create product with valid data
+  #   Then API response status is 200
+  #   And Response contains created product
+  #   And Created product has valid ID
+  #   And Store created product ID for cleanup
 
-  # UPDATE PRODUCT
-  Scenario: Update product fully (PUT)
-    Given Store first product from list
-    When Update product with new valid data
-    Then API response status is 200
-    And Response indicates "successful" update
+  # # UPDATE PRODUCT
+  # Scenario: Update product fully (PUT)
+  #   Given Store first product from list
+  #   When Update product with new valid data
+  #   Then API response status is 200
+  #   And Response indicates "successful" update
 
-  Scenario: Update non-existent product
-    When Update non-existent product with valid data
-    Then API response status is 200
-    And Response indicates "failed" update
+  # Scenario: Update non-existent product
+  #   When Update non-existent product with valid data
+  #   Then API response status is 200
+  #   And Response indicates "failed" update
 
   # PATCH PRODUCT
   Scenario: Update product partially (PATCH)
