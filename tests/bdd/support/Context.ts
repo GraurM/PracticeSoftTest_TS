@@ -1,5 +1,6 @@
 import type { APIResponse } from '@playwright/test';
-import type { ProductDto } from '../../../src/api/dto/ProductDto';
+import type { ProductClient } from '../../../src/api/controller/ProductController';
+import type { ProductResponse } from '../../../src/api/data/response';
 
 /**
  * Context class to manage shared data between test steps
@@ -7,11 +8,11 @@ import type { ProductDto } from '../../../src/api/dto/ProductDto';
  */
 export class Context {
   private apiData: {
-    response?: APIResponse;
+    response: APIResponse;
     data?: unknown;
-    products?: ProductDto[];
+    error?: string | null;
     productId?: string;
-    product?: ProductDto;
+    storedProduct?: ProductResponse;
   };
 
   private uiData: {
@@ -21,7 +22,7 @@ export class Context {
   };
 
   constructor() {
-    this.apiData = {};
+    this.apiData = { response: {} as APIResponse, error: null };
     this.uiData = {};
   }
 
@@ -30,7 +31,7 @@ export class Context {
     this.apiData.response = response;
   }
 
-  getApiResponse(): APIResponse | undefined {
+  getApiResponse(): APIResponse {
     return this.apiData.response;
   }
 
@@ -42,12 +43,12 @@ export class Context {
     return this.apiData.data;
   }
 
-  setProducts(products: ProductDto[]): void {
-    this.apiData.products = products;
+  setApiError(error: string | null): void {
+    this.apiData.error = error;
   }
 
-  getProducts(): ProductDto[] | undefined {
-    return this.apiData.products;
+  getApiError(): string | null | undefined {
+    return this.apiData.error;
   }
 
   setProductId(id: string): void {
@@ -58,12 +59,12 @@ export class Context {
     return this.apiData.productId;
   }
 
-  setProduct(product: ProductDto): void {
-    this.apiData.product = product;
+  setStoredProduct(product: ProductResponse): void {
+    this.apiData.storedProduct = product;
   }
 
-  getProduct(): ProductDto | undefined {
-    return this.apiData.product;
+  getStoredProduct(): ProductResponse | undefined {
+    return this.apiData.storedProduct;
   }
 
   // UI Data methods
@@ -93,7 +94,7 @@ export class Context {
 
   // Clear all data
   clear(): void {
-    this.apiData = {};
+    this.apiData = { response: {} as APIResponse, error: null };
     this.uiData = {};
   }
 }
