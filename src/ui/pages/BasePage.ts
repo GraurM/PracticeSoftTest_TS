@@ -27,6 +27,7 @@ export abstract class BasePage {
   }
 
   async isPageLoaded(): Promise<boolean> {
+    await this.header.headerBadge.waitFor({ state: 'visible', timeout: 5000 });
     return this.header.headerBadge.isVisible();
   }
 }
