@@ -2,6 +2,7 @@ import { Page } from '@playwright/test';
 import { Locator } from '@playwright/test';
 import { getTestConfig } from '../../config';
 import { Header } from '../elements/header_element';
+import { Url } from 'url';
 
 export abstract class BasePage {
   protected readonly page: Page;
@@ -17,16 +18,17 @@ export abstract class BasePage {
   }
 
   async goto(path = '/'): Promise<void> {
-    if (path.startsWith('http://') || path.startsWith('https://')) {
-      await this.page.goto(path);
-      return;
-    }
-
-    const targetUrl = new URL(this.baseUrl + path).toString();
+    const targetUrl =
+      path.startsWith('http://') || path.startsWith('https://')
+        ? path
+        : new URL(path, this.baseUrl).toString();
+    
     await this.page.goto(targetUrl);
+    await this.page.waitForLoadState('networkidle');
   }
 
   async isPageLoaded(): Promise<boolean> {
+    await this.header.headerBadge.waitFor({ state: 'visible', timeout: 5000 });
     return this.header.headerBadge.isVisible();
   }
 }
