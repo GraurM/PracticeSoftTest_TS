@@ -41,7 +41,12 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Run Playwright tests
-        run: npm run test:pw
+        run: |
+          if [ "${{ github.event.inputs.browsers }}" = "all" ]; then
+            npx playwright test tests/ui
+          else
+            npx playwright test tests/ui --project=${{ github.event.inputs.browsers }}
+          fi
 
       - name: Upload test results
         if: always()

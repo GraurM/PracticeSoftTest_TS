@@ -39,7 +39,7 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Run BDD tests
-        run: npm run test:bdd
+        run: rm -rf allure-results && npm run test:bdd:api
         env:
           HEADLESS: ${{ github.event.inputs.headless || 'true' }}
 

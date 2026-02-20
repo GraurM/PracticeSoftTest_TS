@@ -1,17 +1,19 @@
 # Dependencies
 node_modules/
-package-lock.json
 yarn.lock
 
 # Build outputs
 dist/
 build/
 *.js
+!cucumber.js
+!cucumber.api.js
 *.d.ts
 
 # Test reports
 test-results/
 blob-report/
+allure-results/
 playwright-report/
 .nyc_output/
 coverage/
@@ -35,3 +37,5 @@ Thumbs.db
 
 # Playwright
 .auth/
+
+.gitignore
