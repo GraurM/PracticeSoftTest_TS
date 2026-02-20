@@ -1,1409 +1,5 @@
 [
   {
-    "description": "  Comprehensive testing of Product endpoints with filters, sorting, and CRUD operations",
-    "elements": [
-      {
-        "description": "",
-        "id": "product-api;list-all-products",
-        "keyword": "Scenario",
-        "line": 8,
-        "name": "List all products",
-        "steps": [
-          {
-            "keyword": "Before",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 2169070200
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 5,
-            "name": "Product API is available",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:51"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 1394499
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "When ",
-            "line": 9,
-            "name": "Request all products",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:67"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 221541898
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Then ",
-            "line": 10,
-            "name": "API response status is 200",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:328"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 467799
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 11,
-            "name": "Response contains paginated products",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:341"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 880200
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 12,
-            "name": "Response has valid product structure",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:349"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 5447298
-            }
-          },
-          {
-            "keyword": "After",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 65472899
-            }
-          }
-        ],
-        "tags": [],
-        "type": "scenario"
-      },
-      {
-        "description": "",
-        "id": "product-api;list-products-with-category-filter",
-        "keyword": "Scenario",
-        "line": 14,
-        "name": "List products with category filter",
-        "steps": [
-          {
-            "keyword": "Before",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 2099237599
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 5,
-            "name": "Product API is available",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:51"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 233000
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "When ",
-            "line": 15,
-            "name": "Request products filtered by valid category",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:74"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 345599599
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Then ",
-            "line": 16,
-            "name": "API response status is 200",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:328"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 432998
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 17,
-            "name": "Response contains paginated products",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:341"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 515399
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 18,
-            "name": "All products in response belong to requested category",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:416"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 407799
-            }
-          },
-          {
-            "keyword": "After",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 60227299
-            }
-          }
-        ],
-        "tags": [],
-        "type": "scenario"
-      },
-      {
-        "description": "",
-        "id": "product-api;list-eco-friendly-products",
-        "keyword": "Scenario",
-        "line": 26,
-        "name": "List eco-friendly products",
-        "steps": [
-          {
-            "keyword": "Before",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 2094463099
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 5,
-            "name": "Product API is available",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:51"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 354499
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "When ",
-            "line": 27,
-            "name": "Request eco-friendly products only",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:92"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 175457198
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Then ",
-            "line": 28,
-            "name": "API response status is 200",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:328"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 272199
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 29,
-            "name": "Response contains paginated products",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:341"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 1651499
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 30,
-            "name": "All products have CO2 rating A or B",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:434"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 1667000
-            }
-          },
-          {
-            "keyword": "After",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 57474200
-            }
-          }
-        ],
-        "tags": [],
-        "type": "scenario"
-      },
-      {
-        "description": "",
-        "id": "product-api;list-rental-products",
-        "keyword": "Scenario",
-        "line": 32,
-        "name": "List rental products",
-        "steps": [
-          {
-            "keyword": "Before",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 2092243499
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 5,
-            "name": "Product API is available",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:51"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 332499
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "When ",
-            "line": 33,
-            "name": "Request rental products only",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:99"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 193972200
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Then ",
-            "line": 34,
-            "name": "API response status is 200",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:328"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 448100
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 35,
-            "name": "Response contains paginated products",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:341"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 1235899
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 36,
-            "name": "All products are marked as rental",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:442"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 484200
-            }
-          },
-          {
-            "keyword": "After",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 50154599
-            }
-          }
-        ],
-        "tags": [],
-        "type": "scenario"
-      },
-      {
-        "description": "",
-        "id": "product-api;list-products-with-sorting-by-name-ascending",
-        "keyword": "Scenario",
-        "line": 44,
-        "name": "List products with sorting by name ascending",
-        "steps": [
-          {
-            "keyword": "Before",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 2076594099
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 5,
-            "name": "Product API is available",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:51"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 224100
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "When ",
-            "line": 45,
-            "name": "Request products sorted by \"name,asc\"",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:119"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 194591198
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Then ",
-            "line": 46,
-            "name": "API response status is 200",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:328"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 202400
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 47,
-            "name": "Response contains paginated products",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:341"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 296199
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 48,
-            "name": "Products are sorted by name in ascending order",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:463"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 582300
-            }
-          },
-          {
-            "keyword": "After",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 60899699
-            }
-          }
-        ],
-        "tags": [],
-        "type": "scenario"
-      },
-      {
-        "description": "",
-        "id": "product-api;list-products-with-sorting-by-price-descending",
-        "keyword": "Scenario",
-        "line": 50,
-        "name": "List products with sorting by price descending",
-        "steps": [
-          {
-            "keyword": "Before",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 2084650799
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 5,
-            "name": "Product API is available",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:51"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 283898
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "When ",
-            "line": 51,
-            "name": "Request products sorted by \"price,desc\"",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:119"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 171782000
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Then ",
-            "line": 52,
-            "name": "API response status is 200",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:328"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 455299
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 53,
-            "name": "Response contains paginated products",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:341"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 331098
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 54,
-            "name": "Products are sorted by price in descending order",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:471"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 945100
-            }
-          },
-          {
-            "keyword": "After",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 60161299
-            }
-          }
-        ],
-        "tags": [],
-        "type": "scenario"
-      },
-      {
-        "description": "",
-        "id": "product-api;list-products-with-pagination",
-        "keyword": "Scenario",
-        "line": 56,
-        "name": "List products with pagination",
-        "steps": [
-          {
-            "keyword": "Before",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 2109625199
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 5,
-            "name": "Product API is available",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:51"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 234098
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "When ",
-            "line": 57,
-            "name": "Request products with page \"1\"",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:129"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 234696499
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Then ",
-            "line": 58,
-            "name": "API response status is 200",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:328"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 477800
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 59,
-            "name": "Response contains paginated products",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:341"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 599000
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 60,
-            "name": "Current page is \"1\"",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:479"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 553799
-            }
-          },
-          {
-            "keyword": "After",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 55916700
-            }
-          }
-        ],
-        "tags": [],
-        "type": "scenario"
-      },
-      {
-        "description": "",
-        "id": "product-api;get-product-details-by-id",
-        "keyword": "Scenario",
-        "line": 63,
-        "name": "Get product details by ID",
-        "steps": [
-          {
-            "keyword": "Before",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 2084012500
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 5,
-            "name": "Product API is available",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:51"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 243198
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 64,
-            "name": "Store first product from list",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:56"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 175805400
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "When ",
-            "line": 65,
-            "name": "Request product details by stored product ID",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:138"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 168322999
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Then ",
-            "line": 66,
-            "name": "API response status is 200",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:328"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 423798
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 67,
-            "name": "Response product matches stored product",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:486"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 704400
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 68,
-            "name": "Response has complete product details",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:498"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 938499
-            }
-          },
-          {
-            "keyword": "After",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 74155300
-            }
-          }
-        ],
-        "tags": [],
-        "type": "scenario"
-      },
-      {
-        "description": "",
-        "id": "product-api;get-product-details-for-invalid-id",
-        "keyword": "Scenario",
-        "line": 70,
-        "name": "Get product details for invalid ID",
-        "steps": [
-          {
-            "keyword": "Before",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 2073718400
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 5,
-            "name": "Product API is available",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:51"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 236600
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "When ",
-            "line": 71,
-            "name": "Request product details for invalid ID \"invalid-id-12345\"",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:150"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 160949298
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Then ",
-            "line": 72,
-            "name": "API response status is 404",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:328"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 793199
-            }
-          },
-          {
-            "keyword": "After",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 64517800
-            }
-          }
-        ],
-        "tags": [],
-        "type": "scenario"
-      },
-      {
-        "description": "",
-        "id": "product-api;search-products-by-name",
-        "keyword": "Scenario",
-        "line": 75,
-        "name": "Search products by name",
-        "steps": [
-          {
-            "keyword": "Before",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 2072115999
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 5,
-            "name": "Product API is available",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:51"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 248300
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "When ",
-            "line": 76,
-            "name": "Search products for \"Hammer\"",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:165"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 170040500
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Then ",
-            "line": 77,
-            "name": "API response status is 200",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:328"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 642800
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 78,
-            "name": "Response contains paginated search results",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:357"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 622698
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 79,
-            "name": "All results match search term \"Hammer\"",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:508"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 1243400
-            }
-          },
-          {
-            "keyword": "After",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 67597899
-            }
-          }
-        ],
-        "tags": [],
-        "type": "scenario"
-      },
-      {
-        "description": "",
-        "id": "product-api;search-products-with-pagination",
-        "keyword": "Scenario",
-        "line": 81,
-        "name": "Search products with pagination",
-        "steps": [
-          {
-            "keyword": "Before",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 2070894200
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 5,
-            "name": "Product API is available",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:51"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 229300
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "When ",
-            "line": 82,
-            "name": "Search products for \"tool\" with page \"1\"",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:173"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 179940699
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Then ",
-            "line": 83,
-            "name": "API response status is 200",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:328"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 225000
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 84,
-            "name": "Response contains paginated search results",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:357"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 215500
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 85,
-            "name": "Current page is \"1\"",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:479"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 317299
-            }
-          },
-          {
-            "keyword": "After",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 55557400
-            }
-          }
-        ],
-        "tags": [],
-        "type": "scenario"
-      },
-      {
-        "description": "",
-        "id": "product-api;get-related-products",
-        "keyword": "Scenario",
-        "line": 88,
-        "name": "Get related products",
-        "steps": [
-          {
-            "keyword": "Before",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 2073958900
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 5,
-            "name": "Product API is available",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:51"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 242999
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 89,
-            "name": "Store first product from list",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:56"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 218491598
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "When ",
-            "line": 90,
-            "name": "Request related products for stored product ID",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:185"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 158252999
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Then ",
-            "line": 91,
-            "name": "API response status is 200",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:328"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 208799
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 92,
-            "name": "Response contains array of related products",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:364"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 228299
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 93,
-            "name": "Related products have valid structure",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:370"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 1614298
-            }
-          },
-          {
-            "keyword": "After",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 48458900
-            }
-          }
-        ],
-        "tags": [],
-        "type": "scenario"
-      },
-      {
-        "description": "",
-        "id": "product-api;update-product-partially-(patch)",
-        "keyword": "Scenario",
-        "line": 116,
-        "name": "Update product partially (PATCH)",
-        "steps": [
-          {
-            "keyword": "Before",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 2070624200
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 5,
-            "name": "Product API is available",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:51"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 253899
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 117,
-            "name": "Store first product from list",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:56"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 167453599
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "When ",
-            "line": 118,
-            "name": "Partially update stored product with new name",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:253"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 177971599
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Then ",
-            "line": 119,
-            "name": "API response status is 200",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:328"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 198899
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 120,
-            "name": "Response indicates \"successful\" update",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:400"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 516999
-            }
-          },
-          {
-            "keyword": "After",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 62826999
-            }
-          }
-        ],
-        "tags": [],
-        "type": "scenario"
-      },
-      {
-        "description": "",
-        "id": "product-api;patch-non-existent-product",
-        "keyword": "Scenario",
-        "line": 122,
-        "name": "Patch non-existent product",
-        "steps": [
-          {
-            "keyword": "Before",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 2070813599
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 5,
-            "name": "Product API is available",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:51"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 211398
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "When ",
-            "line": 123,
-            "name": "Partially update non-existent product",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:268"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 164710798
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Then ",
-            "line": 124,
-            "name": "API response status is 200",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:328"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 445999
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 125,
-            "name": "Response indicates \"failed\" update",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:400"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 640999
-            }
-          },
-          {
-            "keyword": "After",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 65385099
-            }
-          }
-        ],
-        "tags": [],
-        "type": "scenario"
-      },
-      {
-        "description": "",
-        "id": "product-api;list,-find,-get-details,-and-search-in-sequence",
-        "keyword": "Scenario",
-        "line": 138,
-        "name": "List, find, get details, and search in sequence",
-        "steps": [
-          {
-            "keyword": "Before",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 2067795200
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 5,
-            "name": "Product API is available",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:51"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 243299
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "When ",
-            "line": 139,
-            "name": "Request all products",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:67"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 189080598
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 140,
-            "name": "Store first product from response",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:304"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 163200
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 141,
-            "name": "Request product details by stored product ID",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:138"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 189874698
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 142,
-            "name": "Search products for first product name",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:315"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 193522498
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Then ",
-            "line": 143,
-            "name": "All API calls returned status 200",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:517"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 681099
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 144,
-            "name": "Response contains matching products in search results",
-            "match": {
-              "location": "tests\\bdd\\steps\\api\\products.steps.ts:523"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 276099
-            }
-          },
-          {
-            "keyword": "After",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 58266299
-            }
-          }
-        ],
-        "tags": [],
-        "type": "scenario"
-      }
-    ],
-    "id": "product-api",
-    "line": 1,
-    "keyword": "Feature",
-    "name": "Product API",
-    "tags": [],
-    "uri": "tests\\bdd\\features\\api\\products.feature"
-  },
-  {
     "description": "  Validate search, filter, and cart behavior for products",
     "elements": [
       {
@@ -1418,7 +14,7 @@
             "hidden": true,
             "result": {
               "status": "passed",
-              "duration": 2087304600
+              "duration": 2209097699
             }
           },
           {
@@ -1431,7 +27,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 3520709798
+              "duration": 542846098
             }
           },
           {
@@ -1444,7 +40,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 58177099
+              "duration": 72971599
             }
           },
           {
@@ -1457,7 +53,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 374589399
+              "duration": 385086600
             }
           },
           {
@@ -1465,7 +61,7 @@
             "hidden": true,
             "result": {
               "status": "passed",
-              "duration": 89701300
+              "duration": 80839500
             }
           }
         ],
@@ -1484,7 +80,7 @@
             "hidden": true,
             "result": {
               "status": "passed",
-              "duration": 2064501500
+              "duration": 2167982799
             }
           },
           {
@@ -1497,7 +93,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 382364298
+              "duration": 455436599
             }
           },
           {
@@ -1510,7 +106,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 62197499
+              "duration": 63511700
             }
           },
           {
@@ -1523,7 +119,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 270374699
+              "duration": 365789299
             }
           },
           {
@@ -1536,7 +132,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 373895298
+              "duration": 381532799
             }
           },
           {
@@ -1544,7 +140,7 @@
             "hidden": true,
             "result": {
               "status": "passed",
-              "duration": 84617899
+              "duration": 71362200
             }
           }
         ],
@@ -1563,7 +159,7 @@
             "hidden": true,
             "result": {
               "status": "passed",
-              "duration": 2064017299
+              "duration": 2208512300
             }
           },
           {
@@ -1576,7 +172,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 467741800
+              "duration": 422241399
             }
           },
           {
@@ -1589,7 +185,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 62724199
+              "duration": 64528100
             }
           },
           {
@@ -1602,7 +198,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 395322998
+              "duration": 258355400
             }
           },
           {
@@ -1615,7 +211,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 852902799
+              "duration": 371820199
             }
           },
           {
@@ -1628,7 +224,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 2429200
+              "duration": 3371298
             }
           },
           {
@@ -1636,7 +232,7 @@
             "hidden": true,
             "result": {
               "status": "passed",
-              "duration": 67328000
+              "duration": 73052900
             }
           }
         ],
@@ -1655,7 +251,7 @@
             "hidden": true,
             "result": {
               "status": "passed",
-              "duration": 2084693899
+              "duration": 2232072099
             }
           },
           {
@@ -1668,7 +264,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 415681198
+              "duration": 441745599
             }
           },
           {
@@ -1681,7 +277,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 343064299
+              "duration": 361821399
             }
           },
           {
@@ -1694,7 +290,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 46753798
+              "duration": 48544300
             }
           },
           {
@@ -1707,7 +303,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 2682098
+              "duration": 2909998
             }
           },
           {
@@ -1715,7 +311,7 @@
             "hidden": true,
             "result": {
               "status": "passed",
-              "duration": 67602700
+              "duration": 69393299
             }
           }
         ],

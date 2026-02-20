@@ -40,20 +40,18 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
-      - name: Run Playwright tests
-        run: |
-          if [ "${{ github.event.inputs.browsers }}" = "all" ]; then
-            npx playwright test tests/ui
-          else
-            npx playwright test tests/ui --project=${{ github.event.inputs.browsers }}
-          fi
+      - name: Clean allure results
+        run: rm -rf allure-results
 
-      - name: Upload test results
+      - name: Run UI BDD tests
+        run: cucumber-js --config ./cucumber.ui.js
+
+      - name: Upload Allure results
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-results-node-${{ matrix.node-version }}
-          path: playwright-report/
+          name: allure-results-node-${{ matrix.node-version }}
+          path: allure-results/
           retention-days: 30
 
       - name: Comment PR with results
@@ -65,5 +63,5 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '✅ Playwright tests completed. View artifacts for detailed HTML report.'
+              body: '✅ UI BDD tests completed. View Allure results in artifacts.'
             })

@@ -8,6 +8,7 @@ build/
 *.js
 !cucumber.js
 !cucumber.api.js
+!cucumber.ui.js
 *.d.ts
 
 # Test reports
