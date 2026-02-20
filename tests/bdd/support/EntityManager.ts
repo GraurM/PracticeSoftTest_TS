@@ -2,7 +2,6 @@ import { Page, APIRequestContext } from '@playwright/test';
 import { HomePage } from '../../../src/ui/pages/HomePage';
 import { ProductPage } from '../../../src/ui/pages/ProductPage';
 import { CartPage } from '../../../src/ui/pages/CartPage';
-import { ProductsApi } from '../../../src/api/ProductsApi';
 import { ProductClient } from '../../../src/api/controller/ProductController';
 import { BrandClient } from '../../../src/api/controller/BrandController';
 import { CategoryClient } from '../../../src/api/controller/CategoryController';
@@ -21,7 +20,6 @@ export class EntityManager {
   private homePage?: HomePage;
   private productPage?: ProductPage;
   private cartPage?: CartPage;
-  private productsApi?: ProductsApi;
   private productClient?: ProductClient;
   private brandClient?: BrandClient;
   private categoryClient?: CategoryClient;
@@ -62,19 +60,6 @@ export class EntityManager {
       this.cartPage = new CartPage(this.page);
     }
     return this.cartPage;
-  }
-
-  /**
-   * Get or initialize ProductsApi
-   */
-  getProductsApi(): ProductsApi {
-    if (!this.productsApi) {
-      if (!this.apiRequest) {
-        throw new Error('APIRequestContext is not initialized');
-      }
-      this.productsApi = new ProductsApi(this.apiRequest);
-    }
-    return this.productsApi;
   }
 
   /**
@@ -175,7 +160,6 @@ export class EntityManager {
    */
   reset(): void {
     this.resetPages();
-    this.productsApi = undefined;
     this.productClient = undefined;
     this.brandClient = undefined;
     this.categoryClient = undefined;

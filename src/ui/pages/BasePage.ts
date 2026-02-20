@@ -1,5 +1,6 @@
 import { Page } from '@playwright/test';
 import { Locator } from '@playwright/test';
+import { getTestConfig } from '../../config';
 import { Header } from '../elements/header_element';
 
 export abstract class BasePage {
@@ -10,7 +11,7 @@ export abstract class BasePage {
 
   constructor(page: Page) {
     this.page = page;
-    this.baseUrl = process.env.BASE_URL ?? 'https://practicesoftwaretesting.com';
+    this.baseUrl = getTestConfig().baseUrl;
     this.headerRoot = page.locator('app-header');
     this.header = new Header(this.headerRoot);
   }

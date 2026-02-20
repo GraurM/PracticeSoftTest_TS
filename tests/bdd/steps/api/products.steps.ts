@@ -11,8 +11,6 @@ import { ProductFactory } from '../../../../src/api/data/factories/ProductFactor
 import { ProductService } from '../../../../src/api/service/ProductService';
 import { BrandService } from '../../../../src/api/service/BrandService';
 import { CategoryService } from '../../../../src/api/service/CategoryService';
-import { UpdateProductRequest } from '../../../../src/api/data/request';
-import { get } from 'http';
 import { randomUUID } from 'crypto';
 
 const ensureEntityManager = (world: CustomWorld) => {

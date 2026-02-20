@@ -1,11 +1,16 @@
 import type { ProductClient } from '../controller/ProductController';
 import type {
+  GetProductsRequest,
+  CreateProductRequest,
+  PatchProductRequest,
+  UpdateProductRequest,
+} from '../data/request';
+import type {
   PaginatedProductResponse,
   ProductResponse,
   RelatedProductsResponse,
 } from '../data/response';
 import { parseJson } from '../helpers/JsonParser';
-import type { GetProductsRequest } from '../data/request/GetProductsRequest';
 
 /**
  * ProductService - Handles all product business logic
@@ -33,7 +38,7 @@ export class ProductService {
   /**
    * Create a new product
    */
-  async createProduct(data: Record<string, any>): Promise<ProductResponse> {
+  async createProduct(data: CreateProductRequest): Promise<ProductResponse> {
     const response = await this.client.createProduct(data);
     return parseJson<ProductResponse>(response);
   }
@@ -43,7 +48,7 @@ export class ProductService {
    */
   async updateProduct(
     productId: string,
-    data: Record<string, any>
+    data: UpdateProductRequest
   ): Promise<ProductResponse> {
     const response = await this.client.updateProduct(productId, data);
     return parseJson<ProductResponse>(response);
@@ -54,7 +59,7 @@ export class ProductService {
    */
   async patchProduct(
     productId: string,
-    data: Record<string, any>
+    data: PatchProductRequest
   ): Promise<ProductResponse> {
     const response = await this.client.patchProduct(productId, data);
     return parseJson<ProductResponse>(response);
