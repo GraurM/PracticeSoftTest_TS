@@ -121,8 +121,6 @@ jobs:
         run: npx allure generate ./merged-allure-results --clean -o ./allure-report --single-file
         continue-on-error: true
 
-
-
       - name: 📤 Upload Merged Report
         uses: actions/upload-artifact@v4
         with:
@@ -168,10 +166,27 @@ jobs:
         uses: actions/deploy-pages@v4
         continue-on-error: true
 
-  pr-comment:
-    name: 💬 Comment PR with Report Link
-    runs-on: ubuntu-latest
-    needs: [merge-reports]
-    if: always() && github.event_name == 'pull_request'
-    permissions:
-      pull-requests: write
+      - name: 🔗 Construct Report URL
+        id: report-url
+        run: |
+          echo "url=https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/" >> $GITHUB_OUTPUT
+
+      - name: 📨 Post PR Comment with Report Link
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const reportUrl = '${{ steps.report-url.outputs.url }}';
+            const testStatus = '${{ needs.merge-reports.result }}';
+            
+            const statusEmoji = (status) => {
+              return status === 'success' ? '✅' : status === 'failure' ? '❌' : '⚠️';
+            };
+            
+            const comment = `## 📊 Test Results\n\n${statusEmoji(testStatus)} **BDD Tests Completed** (3 parallel shards)\n\n🔗 [**View Allure Report**](${reportUrl})\n\n📦 Artifacts available for 30 days`;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
