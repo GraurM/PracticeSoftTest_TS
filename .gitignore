@@ -15,6 +15,7 @@ build/
 test-results/
 blob-report/
 allure-results/
+allure-report/
 playwright-report/
 .nyc_output/
 coverage/

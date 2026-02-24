@@ -98,22 +98,30 @@ jobs:
           echo "📋 Available artifacts:"
           ls -lah ./all-shards/ || echo "No artifacts directory found"
           
-          # Copy all allure-results from each shard
-          for shard in ./all-shards/bdd-results-shard-*/allure-results/*; do
-            if [ -f "$shard" ]; then
-              cp "$shard" ./merged-allure-results/ || true
+          # Copy all allure-results from each shard with unique naming to avoid collisions
+          for shard_dir in ./all-shards/bdd-results-shard-*/allure-results/; do
+            if [ -d "$shard_dir" ]; then
+              echo "Processing: $shard_dir"
+              cp "$shard_dir"* ./merged-allure-results/ 2>/dev/null || true
             fi
           done
           
           # Check if any results were merged
           RESULT_COUNT=$(find ./merged-allure-results -type f | wc -l)
           echo "✅ Merged $RESULT_COUNT result files"
-          ls -lah ./merged-allure-results/ || echo "No merged results found"
+          if [ $RESULT_COUNT -eq 0 ]; then
+            echo "⚠️ Warning: No result files were merged!"
+            ls -lah ./all-shards/ || true
+          else
+            ls -lah ./merged-allure-results/ | head -20
+          fi
         continue-on-error: true
 
       - name: 📊 Generate Merged Allure Report
-        run: npx allure generate ./merged-allure-results --clean -o ./allure-report
+        run: npx allure generate ./merged-allure-results --clean -o ./allure-report --single-file
         continue-on-error: true
+
+
 
       - name: 📤 Upload Merged Report
         uses: actions/upload-artifact@v4
@@ -122,6 +130,15 @@ jobs:
           path: ./allure-report/
           retention-days: 30
           if-no-files-found: ignore
+
+      - name: 📄 Upload index.html as Artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report-html
+          path: ./allure-report/index.html
+          retention-days: 30
+          if-no-files-found: warn
 
   publish-report:
     name: 🚀 Publish Reports to GitHub Pages
@@ -158,36 +175,3 @@ jobs:
     if: always() && github.event_name == 'pull_request'
     permissions:
       pull-requests: write
-
-    steps:
-      - name: 📥 Download Merged Report
-        uses: actions/download-artifact@v4
-        with:
-          name: bdd-results-merged
-          path: ./allure-report
-        continue-on-error: true
-
-      - name: 🔗 Construct Report URL
-        id: report-url
-        run: |
-          echo "url=https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/" >> $GITHUB_OUTPUT
-
-      - name: 📨 Post PR Comment with Report Link
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const reportUrl = '${{ steps.report-url.outputs.url }}';
-            const testStatus = '${{ needs.merge-reports.result }}';
-            
-            const statusEmoji = (status) => {
-              return status === 'success' ? '✅' : status === 'failure' ? '❌' : '⚠️';
-            };
-            
-            const comment = `## 📊 Test Results\n\n${statusEmoji(testStatus)} **BDD Tests Completed** (3 parallel shards)\n\n🔗 [**View Allure Report**](${reportUrl})\n\n📦 Artifacts available for 30 days`;
-            
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: comment
-            });

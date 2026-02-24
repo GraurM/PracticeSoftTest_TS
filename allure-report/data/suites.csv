@@ -1,5 +1,0 @@
-"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"Validate search, filter, and cart behavior for products","4375","Open product details from search","","2026-02-24","passed","2026-02-24","","","",""
-"Validate search, filter, and cart behavior for products","3860","Filter by category and brand","","2026-02-24","passed","2026-02-24","","","",""
-"Validate search, filter, and cart behavior for products","4254","Add a product to the cart","","2026-02-24","passed","2026-02-24","","","",""
-"Validate search, filter, and cart behavior for products","8742","Search for a product","","2026-02-24","passed","2026-02-24","","","",""
