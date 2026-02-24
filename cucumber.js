@@ -7,9 +7,11 @@ module.exports = {
       'progress',
       'html:cucumber-report.html',
       'json:cucumber-report.json',
+      'allure-cucumberjs/reporter',
     ],
     formatOptions: {
       snippetInterface: 'async-await',
+      resultsDir: 'allure-results',
     },
   },
 };

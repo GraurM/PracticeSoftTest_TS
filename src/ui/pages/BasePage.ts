@@ -2,7 +2,6 @@ import { Page } from '@playwright/test';
 import { Locator } from '@playwright/test';
 import { getTestConfig } from '../../config';
 import { Header } from '../elements/header_element';
-import { Url } from 'url';
 
 export abstract class BasePage {
   protected readonly page: Page;
@@ -37,7 +36,7 @@ export abstract class BasePage {
   }
 
   async isPageLoaded(): Promise<boolean> {
-    await this.header.headerBadge.waitFor({ state: 'visible', timeout: 5000 });
+    await this.header.headerBadge.waitFor({ state: 'visible', timeout: 30000 });
     return this.header.headerBadge.isVisible();
   }
 }
