@@ -1,6 +1,7 @@
 Feature: Toolshop catalog
   Validate search, filter, and cart behavior for products
 
+  @screenshot
   Scenario: Search for a product
     Given Open the toolshop home page
     When Search for "Hammer"

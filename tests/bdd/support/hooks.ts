@@ -30,17 +30,23 @@ After(async function (this: CustomWorld) {
   await this.apiRequest?.dispose();
 });
 
-AfterStep(async function (this: CustomWorld, { result, pickleStep }) {
-  if (result?.status !== Status.FAILED) {
+AfterStep(async function (this: CustomWorld, { result, pickleStep, pickle }) {
+  // Capture screenshots on failure OR if scenario is tagged with @screenshot
+  const hasScreenshotTag = pickle?.tags?.some((tag: any) => tag.name === '@screenshot') ?? false;
+  const shouldCapture = result?.status === Status.FAILED || hasScreenshotTag;
+
+  if (!shouldCapture || !this.page) {
     return;
   }
 
-  if (this.page) {
-    const screenshot = await this.page.screenshot({ fullPage: true });
-    await this.attach(screenshot, 'image/png');
-    await this.attach(`Current URL: ${this.page.url()}`, 'text/plain');
-  }
+  const screenshot = await this.page.screenshot({ fullPage: true });
+  await this.attach(screenshot, 'image/png');
+  await this.attach(`Current URL: ${this.page.url()}`, 'text/plain');
 
-  await this.attach(`Failed step: ${pickleStep.text}`, 'text/plain');
+  if (result?.status === Status.FAILED) {
+    await this.attach(`Failed step: ${pickleStep.text}`, 'text/plain');
+  } else if (hasScreenshotTag) {
+    await this.attach(`Screenshot captured: ${pickleStep.text}`, 'text/plain');
+  }
 });
 
