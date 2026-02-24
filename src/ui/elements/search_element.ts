@@ -12,11 +12,9 @@ export class SearchElement {
 
   constructor(page: Page) {
     this.page = page;
-    this.searchInput = page.getByRole('textbox', { name: /search/i });
-    this.searchButton = page.getByRole('button', { name: /^search$/i });
-    this.clearButton = page.locator('button[data-test="search-clear"]').or(
-      page.getByRole('button', { name: /clear|reset|×/i })
-    );
+    this.searchInput = page.locator("#search-query");
+    this.searchButton = page.locator("//button[@data-test='search-submit']");
+    this.clearButton = page.locator("//button[@data-test='search-reset']");
   }
 
   /**

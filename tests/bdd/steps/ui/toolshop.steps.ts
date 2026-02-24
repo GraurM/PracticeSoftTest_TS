@@ -1,7 +1,6 @@
 import { Given, Then, When } from '@cucumber/cucumber';
 import { expect } from '@playwright/test';
 import type { CustomWorld } from '../../support/world';
-import { assert } from 'console';
 
 /**
  * Validates that EntityManager is initialized
@@ -17,10 +16,10 @@ Given('Open the toolshop home page', async function (this: CustomWorld) {
   const entityManager = ensureEntityManager(this);
   const homePage = entityManager.getHomePage();
   await homePage.goto('/');
-  // const isLoaded = await homePage.isPageLoaded();
-  // if (!isLoaded) {
-  //   throw new Error('Home page did not load successfully');
-  // }
+  const isLoaded = await homePage.isPageLoaded();
+  if (!isLoaded) {
+    throw new Error('Home page did not load successfully');
+  }
 });
 
 When('Search for {string}', async function (this: CustomWorld, term: string) {
