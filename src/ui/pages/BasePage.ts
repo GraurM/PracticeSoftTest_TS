@@ -23,8 +23,17 @@ export abstract class BasePage {
         ? path
         : new URL(path, this.baseUrl).toString();
     
-    await this.page.goto(targetUrl);
-    await this.page.waitForLoadState('networkidle');
+    await this.page.goto(targetUrl, {
+      waitUntil: 'domcontentloaded',
+      timeout: 30000
+    });
+    
+    // Try to wait for network idle, but don't fail if it times out
+    try {
+      await this.page.waitForLoadState('networkidle', { timeout: 15000 });
+    } catch (error) {
+      console.warn('⚠️ Network idle timeout reached, but page DOM loaded. Continuing...');
+    }
   }
 
   async isPageLoaded(): Promise<boolean> {
