@@ -12,77 +12,76 @@ const ensureEntityManager = (world: CustomWorld) => {
   return world.entityManager;
 };
 
-Given('Open the toolshop home page', async function (this: CustomWorld) {
+Given('Open the Automation Test Store home page', async function (this: CustomWorld) {
   const entityManager = ensureEntityManager(this);
   const homePage = entityManager.getHomePage();
-  await homePage.goto('/');
-  const isLoaded = await homePage.isPageLoaded();
-  if (!isLoaded) {
-    throw new Error('Home page did not load successfully');
-  }
+  await homePage.navigate();
 });
 
 When('Search for {string}', async function (this: CustomWorld, term: string) {
   const entityManager = ensureEntityManager(this);
   const homePage = entityManager.getHomePage();
-  
-  // Store the search term in context for later validation
+
   this.testContext.setSearchTerm(term);
-  await homePage.search(term);
+  await homePage.header.search(term);
 });
 
-When('Open the product details for {string}', async function (this: CustomWorld, name: string) {
-  const entityManager = ensureEntityManager(this);
-  const homePage = entityManager.getHomePage();
-  const page = entityManager.getPage();
-  
-  // Store the selected product name in context
-  this.testContext.setSelectedProductName(name);
-  await homePage.openProduct(name);
-  await expect(page).toHaveURL(/\/product\//);
-});
-
-When('Add the product to the cart', async function (this: CustomWorld) {
+When('Add the product to cart', async function (this: CustomWorld) {
   const entityManager = ensureEntityManager(this);
   const productPage = entityManager.getProductPage();
-  await productPage.addToCart();
+
+  await productPage.addToCartButton.click();
 });
 
-When('Filter by category {string}', async function (this: CustomWorld, category: string) {
+Then('search results include a product', async function (this: CustomWorld) {
   const entityManager = ensureEntityManager(this);
-  const homePage = entityManager.getHomePage();
-  await homePage.filterByCategory(category);
+  const page = entityManager.getProductPage();
+  const title: string = this.testContext.getSearchTerm()!;
+  await expect(page.productTitle).toBeVisible();
+  await expect(page.productTitle).toContainText(title, { ignoreCase: true });
 });
 
-When('Filter by brand {string}', async function (this: CustomWorld, brand: string) {
+Then('the product is added to the cart', async function (this: CustomWorld) {
   const entityManager = ensureEntityManager(this);
-  const homePage = entityManager.getHomePage();
-  await homePage.filterByBrand(brand);
+  const cartPage = entityManager.getCartPage();
+
+  await expect(cartPage.getPage()).toHaveURL(/checkout\/cart/);
+  const itemCount = await cartPage.getCartItemCount();
+  expect(itemCount).toBeGreaterThan(0);
 });
 
-Then('search results include {string}', async function (this: CustomWorld, name: string) {
+When('click the Checkout button', async function (this: CustomWorld) {
   const entityManager = ensureEntityManager(this);
-  const homePage = entityManager.getHomePage();
-  
-  // Check that products matching the name exist
-  const products = homePage.productCards(name);
-  await expect(products).not.toHaveCount(0);
+  const cartPage = entityManager.getCartPage();
+
+  await expect(cartPage.getPage()).toHaveURL(/checkout\/cart/);
+  await cartPage.proceedToCheckout();
 });
 
-Then('the product page shows {string}', async function (this: CustomWorld, name: string) {
+Then('the Account Login page is displayed', async function (this: CustomWorld) {
   const entityManager = ensureEntityManager(this);
-  const productPage = entityManager.getProductPage();
-  await expect(productPage.productHeading).toContainText(name);
+  const page = entityManager.getAccountLoginPage();
+
+  await expect(page.getPage()).toHaveURL(/account\/login/);
+  await expect(page.getPageTitle()).toBeVisible();
+  await expect(page.getPageTitle()).toHaveText('Account Login', { ignoreCase: true });
 });
 
-Then('the product page stays open', async function (this: CustomWorld) {
+Then('user is asked to authenticate or create an account', async function (this: CustomWorld) {
   const entityManager = ensureEntityManager(this);
-  const page = entityManager.getPage();
-  await expect(page).toHaveURL(/\/product\//);
+  const page = entityManager.getAccountLoginPage();
+
+  await expect(page.newCustomerFrame.pageTitle).toBeVisible();
+  await expect(page.newCustomerFrame.pageTitle).toHaveText('I am a new customer.', { ignoreCase: true });
+  await expect(page.returningCustomerFrame.pageTitle).toBeVisible();
+  await expect(page.returningCustomerFrame.pageTitle).toHaveText('Returning Customer', { ignoreCase: true });
 });
 
-Then('search results are shown', async function (this: CustomWorld) {
+Then('the cart page displays with the product', async function (this: CustomWorld) {
   const entityManager = ensureEntityManager(this);
-  const homePage = entityManager.getHomePage();
-  await expect(homePage.productCards()).not.toHaveCount(0);
+  const cartPage = entityManager.getCartPage();
+
+  await expect(cartPage.getPage()).toHaveURL(/checkout\/cart/);
+  const itemCount = await cartPage.getCartItemCount();
+  expect(itemCount).toBeGreaterThan(0);
 });

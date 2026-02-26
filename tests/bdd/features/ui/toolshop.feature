@@ -1,27 +1,22 @@
-Feature: Toolshop catalog
-  Validate search, filter, and cart behavior for products
+Feature: Automation Test Store
+  Validate search, product details, cart, and checkout behavior
 
   @screenshot
   Scenario: Search for a product
-    Given Open the toolshop home page
-    When Search for "Hammer"
-    Then search results include "Hammer"
-
-  Scenario: Open product details from search
-    Given Open the toolshop home page
-    When Search for "Hammer"
-    And Open the product details for "Hammer"
-    Then the product page shows "Hammer"
+    Given Open the Automation Test Store home page
+    When Search for "Skinsheen"
+    Then search results include a product
 
   Scenario: Add a product to the cart
-    Given Open the toolshop home page
-    When Search for "Hammer"
-    And Open the product details for "Hammer"
-    And Add the product to the cart
-    Then the product page stays open
+    Given Open the Automation Test Store home page
+    When Search for "Skinsheen"
+    And Add the product to cart
+    Then the product is added to the cart
 
-  Scenario: Filter by category and brand
-    Given Open the toolshop home page
-    When Filter by category "Hand Tools"
-    And Filter by brand "ForgeFlex"
-    Then search results are shown
+  Scenario: Complete checkout flow
+    Given Open the Automation Test Store home page
+    When Search for "Skinsheen"
+    And Add the product to cart
+    And click the Checkout button
+    Then the Account Login page is displayed
+    And user is asked to authenticate or create an account

@@ -1,64 +1,41 @@
-import { Locator, Page } from '@playwright/test';
+import { Page, Locator } from '@playwright/test';
 import { BasePage } from './BasePage';
-import { SearchElement } from '../elements/search_element';
-import { ProductCard } from '../elements/productCard_element';
-import { ProductsGrid } from '../elements/productsGrid_element';
-import { CategoryFilters } from '../elements/categoryFilters_element';
 
-/**
- * HomePage represents the main product listing page of the Toolshop.
- * Provides access to product cards, search, and filtering functionality.
- * Inherits header navigation from BasePage.
- */
 export class HomePage extends BasePage {
-  readonly searchElement: SearchElement;
-  readonly productsGrid: ProductsGrid;
-  readonly filters: CategoryFilters;
+  private readonly productLinks: Locator;
 
   constructor(page: Page) {
     super(page);
-    this.searchElement = new SearchElement(page);
-    this.productsGrid = new ProductsGrid(page);
-    this.filters = new CategoryFilters(page);
+    this.productLinks = page.getByRole('link').filter({ has: page.locator('[href*="product_id="]') });
   }
 
-  /**
-   * Get product card locators, optionally filtered by name (backward compatibility)
-   */
-  productCards(name?: string): Locator {
-    const cards = this.page.locator('[data-test^="product-"]');
-    if (!name) {
-      return cards;
-    }
-
-    return cards.filter({ hasText: name });
+  async navigate(): Promise<void> {
+    await this.goto('/');
   }
 
-  /**
-   * Open a product by name, preferring in-stock items
-   */
-  async openProduct(name: string): Promise<void> {
-    await this.productsGrid.openProductByName(name);
+  async clickProductByName(productName: string): Promise<void> {
+    const productLink = this.page.getByRole('link', { name: productName }).first();
+    await productLink.click();
   }
 
-  /**
-   * Search for a product term
-   */
-  async search(term: string): Promise<void> {
-    await this.searchElement.search(term);
+  async getCartItemCount(): Promise<string> {
+    const cartText = await this.header.cartLink.textContent();
+    // Extract number from "X Items - $Y.YY" format
+    const match = cartText?.match(/(\d+)\s+Items/);
+    return match ? match[1] : '0';
   }
 
-  /**
-   * Filter products by category
-   */
-  async filterByCategory(name: string): Promise<void> {
-    await this.filters.filterByCategory(name);
+  async filterByCategory(categoryName: string): Promise<void> {
+    await this.navBar.navigateToCategory(categoryName);
   }
 
-  /**
-   * Filter products by brand
-   */
-  async filterByBrand(name: string): Promise<void> {
-    await this.filters.filterByBrand(name);
+  async getProductCards(): Promise<Locator[]> {
+    // Get all product name links which have product_id parameter
+    const cards = await this.page.getByRole('link').filter({ has: this.page.locator('[href*="product_id="]') }).all();
+    return cards;
+  }
+
+  getPage(): Page {
+    return this.page;
   }
 }

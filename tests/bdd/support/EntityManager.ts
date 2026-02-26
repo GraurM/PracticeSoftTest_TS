@@ -1,13 +1,15 @@
 import { Page, APIRequestContext } from '@playwright/test';
+import { CheckoutPage } from '../../../src/ui/pages/CheckoutPage';
+import { CartPage } from '../../../src/ui/pages/CartPage';
 import { HomePage } from '../../../src/ui/pages/HomePage';
 import { ProductPage } from '../../../src/ui/pages/ProductPage';
-import { CartPage } from '../../../src/ui/pages/CartPage';
 import { ProductClient } from '../../../src/api/controller/ProductController';
 import { BrandClient } from '../../../src/api/controller/BrandController';
 import { CategoryClient } from '../../../src/api/controller/CategoryController';
 import { ProductService } from '../../../src/api/service/ProductService';
 import { BrandService } from '../../../src/api/service/BrandService';
 import { CategoryService } from '../../../src/api/service/CategoryService';
+import { AccountLoginPage } from '../../../src/ui/pages/AccountLoginPage';
 
 /**
  * EntityManager class to manage and initialize all pages and API entities
@@ -20,9 +22,12 @@ export class EntityManager {
   private homePage?: HomePage;
   private productPage?: ProductPage;
   private cartPage?: CartPage;
+  private checkoutPage?: CheckoutPage;
+  private accountLoginPage?: AccountLoginPage;
   private productClient?: ProductClient;
   private brandClient?: BrandClient;
   private categoryClient?: CategoryClient;
+
   private productService?: ProductService;
   private brandService?: BrandService;
   private categoryService?: CategoryService;
@@ -60,6 +65,23 @@ export class EntityManager {
       this.cartPage = new CartPage(this.page);
     }
     return this.cartPage;
+  }
+
+  getAccountLoginPage(): AccountLoginPage {
+    if (!this.accountLoginPage) {
+      this.accountLoginPage = new AccountLoginPage(this.page);
+    }
+    return this.accountLoginPage;
+  }
+
+  /**
+   * Get or initialize CheckoutPage
+   */
+  getCheckoutPage(): CheckoutPage {
+    if (!this.checkoutPage) {
+      this.checkoutPage = new CheckoutPage(this.page);
+    }
+    return this.checkoutPage;
   }
 
   /**
@@ -153,6 +175,7 @@ export class EntityManager {
     this.homePage = undefined;
     this.productPage = undefined;
     this.cartPage = undefined;
+    this.checkoutPage = undefined;
   }
 
   /**

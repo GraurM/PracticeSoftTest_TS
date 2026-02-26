@@ -13,7 +13,7 @@ interface ProjectConfigFile {
   HEADLESS?: string;
 }
 
-const DEFAULT_BASE_URL = 'https://practicesoftwaretesting.com';
+const DEFAULT_BASE_URL = 'https://automationteststore.com/';
 const DEFAULT_API_BASE_URL = 'https://api.practicesoftwaretesting.com';
 const PROJECT_CONFIG_PATH = path.resolve(process.cwd(), 'config', 'test-config.json');
 

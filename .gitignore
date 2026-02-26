@@ -14,6 +14,7 @@ build/
 # Test reports
 test-results/
 blob-report/
+test-allure-report/
 allure-results/
 allure-report/
 playwright-report/

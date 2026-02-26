@@ -1,32 +1,79 @@
-import { Locator, Page } from '@playwright/test';
+import { Page, Locator } from '@playwright/test';
 import { BasePage } from './BasePage';
-import { checkoutGrid } from '../elements/checkoutGrid_element';
-import { checkoutSteps } from '../elements/checkoutSteps_element';
 
-/**
- * CartPage represents the shopping cart page.
- * Provides access to cart items and checkout functionality.
- * Inherits header navigation from BasePage.
- */
 export class CartPage extends BasePage {
-
-  readonly stepPosition: checkoutSteps;
-  readonly checkoutGrid: checkoutGrid;
-  readonly continueShoppingButton: Locator;
-  readonly proceedToCheckoutButton: Locator;
+  private readonly cartItemsTable: Locator;
+  private readonly cartItemRows: Locator;
+  private readonly updateButton: Locator;
+  private readonly checkoutButton: Locator;
+  private readonly removeButtons: Locator;
 
   constructor(page: Page) {
     super(page);
-    this.stepPosition = new checkoutSteps(page.locator('aw--wizard-navigation-bar'));
-    this.checkoutGrid = new checkoutGrid(page.locator('table'));
-    this.continueShoppingButton = page.getByRole('button', { name: /continue shopping/i });
-    this.proceedToCheckoutButton = page.getByRole('button', { name: /proceed to checkout/i });
+    this.cartItemsTable = page.locator('.product-list table');
+    this.cartItemRows = page.locator('.product-list table').locator('tbody').locator('tr');
+    this.updateButton = page.getByRole('button', { name: /Update/ });
+    this.checkoutButton = page.getByRole('link', { name: /Checkout/ }).first();
+    this.removeButtons = page.locator('a[href*="remove="]');
   }
 
-  /**
-   * Get cart table rows containing items
-   */
-  cartRows(): Locator {
-    return this.checkoutGrid.rows;
+  async navigate(): Promise<void> {
+    await this.goto('/index.php?rt=checkout/cart');
+    await this.isPageLoaded();
+  }
+
+  async getCartItemCount(): Promise<number> {
+    try {
+      const rows = await this.cartItemRows.count();
+      return rows;
+    } catch {
+      return 0;
+    }
+  }
+
+  async getCartItemNames(): Promise<string[]> {
+    const names: string[] = [];
+    const rows = await this.cartItemRows.all();
+    
+    for (let i = 0; i < rows.length; i++) {
+      const nameCell = rows[i].locator('td:nth-child(2)');
+      const name = await nameCell.textContent();
+      if (name) {
+        names.push(name.trim());
+      }
+    }
+    return names;
+  }
+
+  async getTotalPrice(): Promise<string | null> {
+    // Find the cell containing the total price (it's in the second table after "Total:" text)
+    try {
+      const totalCell = this.page.locator('table').nth(1).locator('td').filter({ hasText: /\$/ }).nth(2);
+      return await totalCell.textContent();
+    } catch {
+      return null;
+    }
+  }
+
+  async updateQuantity(itemIndex: number, quantity: number): Promise<void> {
+    const quantityInput = this.cartItemRows.nth(itemIndex).locator('textbox').first();
+    await quantityInput.clear();
+    await quantityInput.fill(quantity.toString());
+  }
+
+  async clickUpdate(): Promise<void> {
+    await this.updateButton.click();
+  }
+
+  async removeItem(itemIndex: number): Promise<void> {
+    await this.removeButtons.nth(itemIndex).click();
+  }
+
+  async proceedToCheckout(): Promise<void> {
+    await this.checkoutButton.click();
+  }
+
+  getPage(): Page {
+    return this.page;
   }
 }
