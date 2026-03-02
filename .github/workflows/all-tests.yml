@@ -14,6 +14,32 @@ permissions:
   contents: read
 
 jobs:
+  prepare-config:
+    name: ⚙️ Prepare Config
+    runs-on: ubuntu-latest
+    outputs:
+      base_url: ${{ steps.resolve.outputs.base_url }}
+
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup Node.js (for config parsing)
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: 🌐 Resolve BASE_URL from config/test-config.json
+        id: resolve
+        shell: bash
+        run: |
+          BASE_URL=$(node -e "const fs=require('node:fs');const c=JSON.parse(fs.readFileSync('config/test-config.json','utf8'));const v=String(c.BASE_URL||'').trim();if(!v){process.exit(1)};process.stdout.write(v)") || {
+            echo "BASE_URL not found in config/test-config.json"
+            exit 1
+          }
+          echo "base_url=$BASE_URL" >> "$GITHUB_OUTPUT"
+          echo "Resolved BASE_URL=$BASE_URL"
+
   bdd-tests:
     name: 🧪 BDD Tests (Shard ${{ matrix.shard }}/3)
     runs-on: ubuntu-latest
@@ -61,6 +87,7 @@ jobs:
   playwright-quality-tests:
     name: 🎭 Playwright Quality Tests
     runs-on: ubuntu-latest
+    needs: [bdd-tests, prepare-config]
 
     steps:
       - name: 📥 Checkout repository
@@ -82,11 +109,13 @@ jobs:
         run: npm run test:visual
         env:
           CI: true
+          BASE_URL: ${{ needs.prepare-config.outputs.base_url }}
 
       - name: ♿ Run Accessibility Tests
         run: npm run test:a11y
         env:
           CI: true
+          BASE_URL: ${{ needs.prepare-config.outputs.base_url }}
 
       - name: 📤 Upload Playwright Quality Reports
         if: always()
@@ -102,6 +131,7 @@ jobs:
   performance-tests:
     name: ⚡ Performance Tests (k6)
     runs-on: ubuntu-latest
+    needs: prepare-config
 
     steps:
       - name: 📥 Checkout repository
@@ -113,7 +143,7 @@ jobs:
       - name: 🧪 Run k6 Performance Tests
         run: k6 run tests/performance/homepage.k6.js
         env:
-          BASE_URL: https://automationteststore.com/
+          BASE_URL: ${{ needs.prepare-config.outputs.base_url }}
 
   merge-reports:
     name: 📊 Merge Allure Reports
