@@ -168,10 +168,21 @@ jobs:
         uses: grafana/setup-k6-action@v1
 
       - name: 🧪 Run k6 Performance Tests
+        working-directory: ${{ github.workspace }}
         run: |
           mkdir -p logs k6-results
           set -o pipefail
-          k6 run --summary-export=k6-results/k6-summary.json --out json=k6-results/k6-metrics.json tests/performance/homepage.k6.js 2>&1 | tee logs/k6-performance.log
+          SCRIPT_PATH="$GITHUB_WORKSPACE/tests/performance/homepage.k6.js"
+          if [ ! -f "$SCRIPT_PATH" ]; then
+            echo "k6 script not found at: $SCRIPT_PATH"
+            echo "Current directory: $(pwd)"
+            echo "Workspace files:"
+            ls -la
+            echo "tests directory:"
+            ls -la "$GITHUB_WORKSPACE/tests" || true
+            exit 1
+          fi
+          k6 run --summary-export=k6-results/k6-summary.json --out json=k6-results/k6-metrics.json "$SCRIPT_PATH" 2>&1 | tee logs/k6-performance.log
         env:
           BASE_URL: ${{ needs.prepare-config.outputs.base_url }}
           CI: true
