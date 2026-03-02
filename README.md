@@ -14,6 +14,7 @@ This project provides a structured setup for automated testing using:
 ### Prerequisites
 - Node.js 18+ installed
 - npm or yarn package manager
+- k6 installed (or Docker as fallback for performance tests)
 
 ### Installation
 
@@ -73,7 +74,7 @@ Centralized test configuration is stored in [config/test-config.json](config/tes
 This file is loaded into environment variables at runtime, allowing all test components to access unified settings.
 
 Supported configuration values in the JSON file:
-- `BASE_URL` (default: `https://practicesoftwaretesting.com`) - UI base URL
+- `BASE_URL` (default: `https://automationteststore.com/`) - UI base URL
 - `API_BASE_URL` (default: `https://api.practicesoftwaretesting.com`) - API base URL
 - `HEADLESS` (default: `true`) - Browser headless mode (accepts `true/false`, `1/0`, `yes/no`, `on/off`)
 
@@ -98,9 +99,9 @@ GitHub Actions workflows automatically run tests and generate reports. Three pip
 
 ### `all-tests.yml`
 Runs on every push to `main`/`develop` and on all pull requests:
-- Executes both BDD and Playwright test suites
+- Executes BDD tests, Playwright visual tests, Playwright accessibility tests, and k6 performance tests
 - Generates Allure reports for BDD tests
-- Publishes reports to GitHub Pages (main branch only)
+- Uploads Playwright and Allure artifacts
 - Runs on Node 20.x
 
 ### `test.yml`
@@ -132,6 +133,10 @@ Recommended extensions:
 - `npm run allure:open` - Open generated Allure report
 - `npm run test:ui` - Run tests in interactive UI mode
 - `npm run test:debug` - Debug tests with Inspector
+- `npm run test:visual` - Run Playwright visual regression tests
+- `npm run test:a11y` - Run Playwright accessibility tests
+- `npm run test:perf` - Run k6 performance tests (local k6 or Docker fallback)
+- `npm run test:quality` - Run visual + accessibility + performance suites
 - `npm run codegen` - Generate test code using Codegen
 - `npm run build` - Compile TypeScript
 - `npm run lint` - Run ESLint

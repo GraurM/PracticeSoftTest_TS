@@ -13,6 +13,10 @@
     "test:pw": "playwright test",
     "test:ui": "playwright test --ui",
     "test:debug": "playwright test --debug",
+    "test:visual": "playwright test tests/playwright/visual --project=chromium",
+    "test:a11y": "playwright test tests/playwright/accessibility --project=chromium",
+    "test:perf": "node scripts/run-k6.js",
+    "test:quality": "npm run test:visual && npm run test:a11y && npm run test:perf",
     "codegen": "playwright codegen",
     "build": "tsc",
     "lint": "eslint .",
@@ -27,6 +31,7 @@
   "license": "MIT",
   "devDependencies": {
     "@cucumber/cucumber": "^12.0.0",
+    "@axe-core/playwright": "^4.10.0",
     "@playwright/test": "^1.40.0",
     "@types/node": "^20.19.34",
     "allure-commandline": "^2.36.0",

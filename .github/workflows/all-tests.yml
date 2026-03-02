@@ -58,6 +58,63 @@ jobs:
           retention-days: 30
           if-no-files-found: warn
 
+  playwright-quality-tests:
+    name: 🎭 Playwright Quality Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: 📦 Install dependencies
+        run: npm ci
+
+      - name: 🎭 Install Playwright (Chromium)
+        run: npx playwright install --with-deps chromium
+
+      - name: 🧪 Run Visual Tests
+        run: npm run test:visual
+        env:
+          CI: true
+
+      - name: ♿ Run Accessibility Tests
+        run: npm run test:a11y
+        env:
+          CI: true
+
+      - name: 📤 Upload Playwright Quality Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-quality-report
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 30
+          if-no-files-found: warn
+
+  performance-tests:
+    name: ⚡ Performance Tests (k6)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: ⚡ Setup k6
+        uses: grafana/setup-k6-action@v1
+
+      - name: 🧪 Run k6 Performance Tests
+        run: k6 run tests/performance/homepage.k6.js
+        env:
+          BASE_URL: https://automationteststore.com/
+
   merge-reports:
     name: 📊 Merge Allure Reports
     runs-on: ubuntu-latest
