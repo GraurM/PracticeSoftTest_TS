@@ -44,15 +44,21 @@ jobs:
         run: rm -rf allure-results
 
       - name: Run UI BDD tests
-        run: cucumber-js --config ./cucumber.ui.js
+        run: |
+          mkdir -p logs
+          set -o pipefail
+          cucumber-js --config ./cucumber.ui.js 2>&1 | tee logs/ui-bdd.log
 
       - name: Upload Allure results
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: allure-results-node-${{ matrix.node-version }}
-          path: allure-results/
+          path: |
+            allure-results/
+            logs/
           retention-days: 30
+          if-no-files-found: error
 
       - name: Comment PR with results
         if: github.event_name == 'pull_request' && always()

@@ -39,7 +39,11 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Run BDD tests
-        run: rm -rf allure-results && npm run test:bdd:api
+        run: |
+          mkdir -p logs
+          rm -rf allure-results
+          set -o pipefail
+          npm run test:bdd:api 2>&1 | tee logs/bdd-api.log
         env:
           HEADLESS: ${{ github.event.inputs.headless || 'true' }}
 
@@ -55,7 +59,9 @@ jobs:
           path: |
             allure-results/
             playwright-report/
+            logs/
           retention-days: 30
+          if-no-files-found: error
 
       - name: Upload Allure report
         if: always()
@@ -64,6 +70,7 @@ jobs:
           name: allure-report-node-${{ matrix.node-version }}
           path: allure-report/
           retention-days: 30
+          if-no-files-found: error
 
   publish-report:
     name: Publish Test Report
