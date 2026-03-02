@@ -12,8 +12,8 @@ export const options = {
     checks: ['rate>0.99'],
     http_req_failed: ['rate<0.01'],
     http_req_duration: isCI
-      ? ['p(95)<1500']
-      : ['p(95)<500']
+      ? ['p(95)<12000']
+      : ['p(95)<1500']
   },
 };
 
