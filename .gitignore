@@ -9,6 +9,8 @@ build/
 !cucumber.js
 !cucumber.api.js
 !cucumber.ui.js
+!tests/performance/**/*.k6.js
+!scripts/run-k6.js
 *.d.ts
 
 # Test reports
