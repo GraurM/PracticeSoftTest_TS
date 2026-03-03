@@ -8,6 +8,14 @@ on:
         required: false
         default: ''
         type: string
+      update_snapshots:
+        description: 'Update visual baselines instead of strict visual comparison'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
 
 jobs:
   quality-tests:
@@ -55,7 +63,12 @@ jobs:
         run: |
           mkdir -p logs
           set -o pipefail
-          npx playwright test tests/playwright/visual --project=chromium --reporter=line,allure-playwright 2>&1 | tee logs/visual-tests.log
+          SNAPSHOT_ARG=""
+          if [ "${{ github.event.inputs.update_snapshots }}" = "true" ]; then
+            SNAPSHOT_ARG="--update-snapshots"
+            echo "Running visual tests in baseline update mode"
+          fi
+          npx playwright test tests/playwright/visual --project=chromium --reporter=line,allure-playwright $SNAPSHOT_ARG 2>&1 | tee logs/visual-tests.log
         env:
           CI: true
           BASE_URL: ${{ steps.resolve_base_url.outputs.base_url }}

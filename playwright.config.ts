@@ -14,6 +14,7 @@ const config = getTestConfig();
  */
 export default defineConfig({
   testDir: './tests',
+  snapshotPathTemplate: '{testDir}/{testFilePath}-snapshots/{arg}-{projectName}{ext}',
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
