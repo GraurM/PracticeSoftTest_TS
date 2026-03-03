@@ -463,9 +463,16 @@ Then('All products have price between {int} and {int}', async function (
 Then('Products are sorted by name in ascending order', async function (this: CustomWorld) {
   const data = this.testContext.getApiData() as PaginatedProductResponse;
   const names = data.data.map((p) => p.name);
-  const sortedNames = [...names].sort();
+  
+  const collator = new Intl.Collator("en", {
+    numeric: true,          // "A2" < "A10"
+    sensitivity: "variant", // case-sensitive
+    caseFirst: "upper"      // "A" before "a"
+  });
 
+  const sortedNames = [...names].sort((a, b) => collator.compare(a, b));
   expect(names).toEqual(sortedNames);
+
 });
 
 Then('Products are sorted by price in descending order', async function (this: CustomWorld) {

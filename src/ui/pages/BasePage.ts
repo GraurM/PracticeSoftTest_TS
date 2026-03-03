@@ -33,6 +33,10 @@ export abstract class BasePage {
     });
   }
 
+  async waitForPageLoad(): Promise<void> {
+    await this.page.waitForLoadState('domcontentloaded', { timeout: 30000 });
+  }
+
   async isPageLoaded(): Promise<boolean> {
     await this.header.pageTitle.waitFor({ state: 'visible', timeout: 10000 });
     return this.header.pageTitle.isVisible();
