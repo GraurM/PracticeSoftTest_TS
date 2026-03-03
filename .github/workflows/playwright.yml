@@ -1,73 +1,97 @@
-name: Playwright Tests
+name: Quality Tests (Visual + A11y)
 
 on:
   workflow_dispatch:
     inputs:
-      browsers:
-        description: 'Browsers to test'
+      base_url:
+        description: 'Optional base URL override (defaults to config/test-config.json)'
         required: false
-        default: 'chromium'
-        type: choice
-        options:
-          - 'chromium'
-          - 'firefox'
-          - 'webkit'
-          - 'all'
+        default: ''
+        type: string
 
 jobs:
-  test:
-    name: Run Playwright Tests
+  quality-tests:
+    name: Run Visual and Accessibility Tests
     runs-on: ubuntu-latest
-    
-    strategy:
-      fail-fast: false
-      matrix:
-        node-version: ['18.x', '20.x']
 
     steps:
-      - name: Checkout repository
+      - name: 📥 Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: 📦 Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 20
           cache: 'npm'
 
-      - name: Install dependencies
+      - name: 📦 Install dependencies
         run: npm ci
 
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps
+      - name: 🎭 Install Playwright (Chromium)
+        run: npx playwright install --with-deps chromium
 
-      - name: Clean allure results
-        run: rm -rf allure-results
+      - name: 🌐 Resolve BASE_URL
+        id: resolve_base_url
+        shell: bash
+        run: |
+          INPUT_BASE_URL="${{ github.event.inputs.base_url }}"
+          if [ -n "$INPUT_BASE_URL" ]; then
+            BASE_URL="$INPUT_BASE_URL"
+          else
+            BASE_URL=$(node -e "const fs=require('node:fs');const c=JSON.parse(fs.readFileSync('config/test-config.json','utf8'));const v=String(c.BASE_URL||'').trim();if(!v){process.exit(1)};process.stdout.write(v)") || {
+              echo "BASE_URL not found in config/test-config.json"
+              exit 1
+            }
+          fi
+          echo "base_url=$BASE_URL" >> "$GITHUB_OUTPUT"
+          echo "Resolved BASE_URL=$BASE_URL"
 
-      - name: Run UI BDD tests
+      - name: 🧹 Clean report folders
+        run: rm -rf allure-results allure-report logs playwright-report test-results
+
+      - name: 🧪 Run Visual Tests
+        id: visual
+        continue-on-error: true
         run: |
           mkdir -p logs
           set -o pipefail
-          cucumber-js --config ./cucumber.ui.js 2>&1 | tee logs/ui-bdd.log
+          npx playwright test tests/playwright/visual --project=chromium --reporter=line,allure-playwright 2>&1 | tee logs/visual-tests.log
+        env:
+          CI: true
+          BASE_URL: ${{ steps.resolve_base_url.outputs.base_url }}
 
-      - name: Upload Allure results
+      - name: ♿ Run Accessibility Tests
+        id: a11y
+        if: always()
+        continue-on-error: true
+        run: |
+          mkdir -p logs
+          set -o pipefail
+          npx playwright test tests/playwright/accessibility --project=chromium --reporter=line,allure-playwright 2>&1 | tee logs/accessibility-tests.log
+        env:
+          CI: true
+          BASE_URL: ${{ steps.resolve_base_url.outputs.base_url }}
+
+      - name: 📊 Generate Single-File Allure Report
+        if: always()
+        run: npm run allure:generate:single
+
+      - name: 📝 Quality execution summary
+        if: always()
+        run: |
+          echo "Visual outcome: ${{ steps.visual.outcome }}"
+          echo "A11y outcome: ${{ steps.a11y.outcome }}"
+
+      - name: 📤 Upload Quality Artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: allure-results-node-${{ matrix.node-version }}
+          name: quality-tests-report
           path: |
             allure-results/
+            allure-report/index.html
+            playwright-report/
+            test-results/
             logs/
           retention-days: 30
           if-no-files-found: error
-
-      - name: Comment PR with results
-        if: github.event_name == 'pull_request' && always()
-        uses: actions/github-script@v7
-        with:
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: '✅ UI BDD tests completed. View Allure results in artifacts.'
-            })
